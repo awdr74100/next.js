@@ -639,10 +639,8 @@ export abstract class RouteModule<
 
     // RegExp configs cross the JSON manifest as their source string and are
     // revived here so internals only ever hold a RegExp.
-    if (typeof nextConfig.experimental?.nonJsBots === 'string') {
-      nextConfig.experimental.nonJsBots = new RegExp(
-        nextConfig.experimental.nonJsBots
-      )
+    if (typeof nextConfig.nonJsBots === 'string') {
+      nextConfig.nonJsBots = new RegExp(nextConfig.nonJsBots)
     }
 
     let deploymentId

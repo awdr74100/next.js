@@ -2094,16 +2094,10 @@ export default async function build(
           // RegExp configs cross this JSON manifest as their source string and
           // are revived where the manifest config is adopted, so internals only
           // ever hold a RegExp.
-          if (
-            runtimeConfigWithoutFilePath.experimental?.nonJsBots instanceof
-            RegExp
-          ) {
-            runtimeConfigWithoutFilePath.experimental = {
-              ...runtimeConfigWithoutFilePath.experimental,
-              // @ts-expect-error: serialize the regex config into string
-              nonJsBots:
-                runtimeConfigWithoutFilePath.experimental.nonJsBots.source,
-            }
+          if (runtimeConfigWithoutFilePath.nonJsBots instanceof RegExp) {
+            // @ts-expect-error: serialize the regex config into string
+            runtimeConfigWithoutFilePath.nonJsBots =
+              runtimeConfigWithoutFilePath.nonJsBots.source
           }
 
           const serverFilesManifest: RequiredServerFilesManifest = {

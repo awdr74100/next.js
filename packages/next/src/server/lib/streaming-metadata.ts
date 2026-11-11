@@ -30,19 +30,12 @@ export function shouldServeStreamingMetadata(
 
 export function shouldDisableProgressiveLoading(
   userAgent: string,
-  experimental: {
-    disableProgressiveLoadingForNonJsBots?: boolean
-    nonJsBots?: RegExp
-  }
+  nonJsBots: RegExp | undefined
 ): boolean {
-  if (!experimental.disableProgressiveLoadingForNonJsBots) {
-    return false
-  }
   // No real UA string exceeds this bound, so oversized UAs are not bots we need
   // to identify; skip the (possibly user-configured) regex on them entirely.
   if (!userAgent || isOversizedUserAgent(userAgent)) {
     return false
   }
-  const nonJsBots = experimental.nonJsBots ?? NON_JS_BOT_UA_RE
-  return nonJsBots.test(userAgent)
+  return (nonJsBots ?? NON_JS_BOT_UA_RE).test(userAgent)
 }

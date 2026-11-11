@@ -2243,7 +2243,7 @@ export default abstract class Server<
         ),
         disableProgressiveLoading: shouldDisableProgressiveLoading(
           ua,
-          this.nextConfig.experimental
+          this.nextConfig.nonJsBots
         ),
       },
     }

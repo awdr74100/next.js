@@ -1719,8 +1719,8 @@ function assignDefaultsAndValidate(
     result.htmlLimitedBots = HTML_LIMITED_BOT_UA_RE_STRING
   }
 
-  if (!result.experimental.nonJsBots) {
-    result.experimental.nonJsBots = NON_JS_BOT_UA_RE
+  if (!result.nonJsBots) {
+    result.nonJsBots = NON_JS_BOT_UA_RE
   }
 
   if (
@@ -2081,10 +2081,8 @@ async function loadConfigImpl(
     )
     // RegExp configs cross the JSON boundary as their source string and are
     // revived here so internals only ever hold a RegExp.
-    if (typeof standaloneConfig.experimental?.nonJsBots === 'string') {
-      standaloneConfig.experimental.nonJsBots = new RegExp(
-        standaloneConfig.experimental.nonJsBots
-      )
+    if (typeof standaloneConfig.nonJsBots === 'string') {
+      standaloneConfig.nonJsBots = new RegExp(standaloneConfig.nonJsBots)
     }
     // The standalone config is JSON written at build time, like the manifests.
     if (process.env.__NEXT_TEST_MODE) {
@@ -2515,16 +2513,6 @@ function enforceExperimentalFeatures(
       (isDefaultConfig && !config.cacheComponents))
   ) {
     config.cacheComponents = true
-  }
-
-  // TODO: Remove this once we've made disableProgressiveLoadingForNonJsBots the
-  // default.
-  if (
-    process.env.__NEXT_CACHE_COMPONENTS === 'true' &&
-    // We do respect an explicit value in the user config.
-    config.experimental.disableProgressiveLoadingForNonJsBots === undefined
-  ) {
-    config.experimental.disableProgressiveLoadingForNonJsBots = true
   }
 
   if (process.env.__NEXT_PARTIAL_PREFETCHING === 'true') {
